@@ -16,7 +16,7 @@
           </router-link>
         </li>
         <li>
-          <a href="#" class="menu-link with-submenu" @click.prevent="toggleSubmenu($event)">
+          <a href="#" class="menu-link with-submenu" @click.prevent="toggleSubmenu($event)" data-target="data-center">
             <i class="fas fa-server menu-icon"></i>
             <span class="menu-text">数据中心设备管理</span>
             <i class="fas fa-chevron-down submenu-toggle" :class="{ rotated: openSubmenu === 'data-center' }"></i>
@@ -40,10 +40,16 @@
                 <span class="menu-text">微网设备管理</span>
               </router-link>
             </li>
+            <li>
+              <router-link to="/data-center" class="menu-link" data-target="data-center">
+                <i class="fas fa-database menu-icon"></i>
+                <span class="menu-text">数据中心管理</span>
+              </router-link>
+            </li>
           </ul>
         </li>
         <li>
-          <a href="#" class="menu-link with-submenu" @click.prevent="toggleSubmenu($event)">
+          <a href="#" class="menu-link with-submenu" @click.prevent="toggleSubmenu($event)" data-target="load-forecast">
             <i class="fas fa-chart-line menu-icon"></i>
             <span class="menu-text">负荷预测管理</span>
             <i class="fas fa-chevron-down submenu-toggle" :class="{ rotated: openSubmenu === 'load-forecast' }"></i>
@@ -70,7 +76,7 @@
           </ul>
         </li>
         <li>
-          <a href="#" class="menu-link with-submenu" @click.prevent="toggleSubmenu($event)">
+          <a href="#" class="menu-link with-submenu" @click.prevent="toggleSubmenu($event)" data-target="power-dispatch">
             <i class="fas fa-bolt menu-icon"></i>
             <span class="menu-text">电力调度管理</span>
             <i class="fas fa-chevron-down submenu-toggle" :class="{ rotated: openSubmenu === 'power-dispatch' }"></i>
@@ -97,7 +103,7 @@
           </router-link>
         </li>
         <li>
-          <a href="#" class="menu-link with-submenu" @click.prevent="toggleSubmenu($event)">
+          <a href="#" class="menu-link with-submenu" @click.prevent="toggleSubmenu($event)" data-target="system-management">
             <i class="fas fa-cogs menu-icon"></i>
             <span class="menu-text">系统管理</span>
             <i class="fas fa-chevron-down submenu-toggle" :class="{ rotated: openSubmenu === 'system-management' }"></i>
@@ -185,6 +191,7 @@ const pageTitle = computed(() => {
     '/device-basic': '设备基础管理',
     '/device-status': '设备状态监控',
     '/microgrid-equipment': '微网设备管理',
+    '/data-center': '数据中心管理',
     '/data-processing': '数据处理',
     '/model-management': '模型管理',
     '/forecast-execution': '预测执行',
@@ -203,6 +210,7 @@ const breadcrumb = computed(() => {
     '/device-basic': '设备基础管理',
     '/device-status': '设备状态监控',
     '/microgrid-equipment': '微网设备管理',
+    '/data-center': '数据中心管理',
     '/data-processing': '数据处理',
     '/model-management': '模型管理',
     '/forecast-execution': '预测执行',

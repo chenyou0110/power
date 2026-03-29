@@ -80,7 +80,7 @@
         </div>
       </div>
     </div>
-    <div class="row mt-4">
+    <div class="row mt-4 mb-4">
       <div class="col-md-8">
         <div class="card">
           <div class="card-header">
@@ -141,13 +141,13 @@
               <h6 class="fw-bold mb-2">选择智能体</h6>
               <div class="row gap-2">
                 <div class="col-12">
-                  <button class="btn btn-primary w-100 py-2 d-flex align-items-center justify-content-center gap-2 agent-btn" data-target="dispatch-agent">
+                  <button class="btn btn-primary w-100 py-2 d-flex align-items-center justify-content-center gap-2 agent-btn" @click="selectAgent('dispatch-agent')">
                     <i class="fas fa-bolt"></i>
                     <span>调度智能体</span>
                   </button>
                 </div>
                 <div class="col-12">
-                  <button class="btn btn-success w-100 py-2 d-flex align-items-center justify-content-center gap-2 agent-btn" data-target="forecast-agent">
+                  <button class="btn btn-success w-100 py-2 d-flex align-items-center justify-content-center gap-2 agent-btn" @click="selectAgent('forecast-agent')">
                     <i class="fas fa-chart-line"></i>
                     <span>预测智能体</span>
                   </button>
@@ -240,6 +240,12 @@ let systemStatusChart = null
 const viewDetails = (datacenter) => {
   console.log('查看数据中心详情:', datacenter)
   // 这里可以添加详情查看逻辑，比如打开模态框
+}
+
+// 选择智能体
+const selectAgent = (agentType) => {
+  console.log('选择智能体:', agentType)
+  // 这里可以添加智能体选择逻辑
 }
 
 // 初始化系统运行状态图表

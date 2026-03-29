@@ -5,15 +5,15 @@
       设备基础管理
     </div>
     <div class="mb-4">
-      <button class="btn btn-primary">
+      <button class="btn btn-primary" @click="addDevice">
         <i class="fas fa-plus mr-2"></i>
         添加设备
       </button>
-      <button class="btn btn-success">
+      <button class="btn btn-success" @click="refreshData">
         <i class="fas fa-sync-alt mr-2"></i>
         刷新数据
       </button>
-      <button class="btn btn-warning">
+      <button class="btn btn-warning" @click="exportData">
         <i class="fas fa-download mr-2"></i>
         导出数据
       </button>
@@ -46,6 +46,11 @@
                 <option value="DC003">东区数据中心C</option>
                 <option value="DC004">西区数据中心D</option>
                 <option value="DC005">北区数据中心E</option>
+                <option value="DC006">南区数据中心F</option>
+                <option value="DC007">东区数据中心G</option>
+                <option value="DC008">西区数据中心H</option>
+                <option value="DC009">北区数据中心I</option>
+                <option value="DC010">南区数据中心J</option>
               </select>
             </div>
           </div>
@@ -109,56 +114,22 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>DEV001</td>
-                <td>服务器A</td>
-                <td>北区数据中心A</td>
-                <td>服务器</td>
-                <td><span class="status-badge status-success">在线</span></td>
-                <td>华为</td>
-                <td>RH2288H V5</td>
-                <td>192.168.1.101</td>
+              <tr v-for="device in devices" :key="device.id">
+                <td>{{ device.id }}</td>
+                <td>{{ device.name }}</td>
+                <td>{{ device.datacenter }}</td>
+                <td>{{ device.type }}</td>
                 <td>
-                  <button class="btn btn-sm btn-primary">
-                    <i class="fas fa-edit"></i>
-                  </button>
-                  <button class="btn btn-sm btn-info">
-                    <i class="fas fa-eye"></i>
-                  </button>
+                  <span class="status-badge status-success">{{ device.status }}</span>
                 </td>
-              </tr>
-              <tr>
-                <td>DEV002</td>
-                <td>服务器B</td>
-                <td>南区数据中心B</td>
-                <td>服务器</td>
-                <td><span class="status-badge status-success">在线</span></td>
-                <td>华为</td>
-                <td>RH2288H V5</td>
-                <td>192.168.1.102</td>
+                <td>{{ device.manufacturer }}</td>
+                <td>{{ device.model }}</td>
+                <td>{{ device.ip }}</td>
                 <td>
-                  <button class="btn btn-sm btn-primary">
+                  <button class="btn btn-sm btn-primary" @click="editDevice(device)">
                     <i class="fas fa-edit"></i>
                   </button>
-                  <button class="btn btn-sm btn-info">
-                    <i class="fas fa-eye"></i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>DEV003</td>
-                <td>服务器C</td>
-                <td>东区数据中心C</td>
-                <td>服务器</td>
-                <td><span class="status-badge status-success">在线</span></td>
-                <td>华为</td>
-                <td>RH2288H V5</td>
-                <td>192.168.1.103</td>
-                <td>
-                  <button class="btn btn-sm btn-primary">
-                    <i class="fas fa-edit"></i>
-                  </button>
-                  <button class="btn btn-sm btn-info">
+                  <button class="btn btn-sm btn-info" @click="viewDevice(device)">
                     <i class="fas fa-eye"></i>
                   </button>
                 </td>
@@ -172,9 +143,166 @@
 </template>
 
 <script setup>
-// 设备基础管理组件
+import { ref } from 'vue'
+
+// 设备数据
+const devices = ref([
+  {
+    id: 'DEV001',
+    name: '服务器A',
+    datacenter: '北区数据中心A',
+    type: '服务器',
+    status: '在线',
+    manufacturer: '华为',
+    model: 'RH2288H V5',
+    ip: '192.168.1.101'
+  },
+  {
+    id: 'DEV002',
+    name: '服务器B',
+    datacenter: '南区数据中心B',
+    type: '服务器',
+    status: '在线',
+    manufacturer: '华为',
+    model: 'RH2288H V5',
+    ip: '192.168.1.102'
+  },
+  {
+    id: 'DEV003',
+    name: '服务器C',
+    datacenter: '东区数据中心C',
+    type: '服务器',
+    status: '在线',
+    manufacturer: '华为',
+    model: 'RH2288H V5',
+    ip: '192.168.1.103'
+  },
+  {
+    id: 'DEV004',
+    name: '服务器D',
+    datacenter: '西区数据中心D',
+    type: '服务器',
+    status: '在线',
+    manufacturer: '华为',
+    model: 'RH2288H V5',
+    ip: '192.168.1.104'
+  },
+  {
+    id: 'DEV005',
+    name: '服务器E',
+    datacenter: '北区数据中心E',
+    type: '服务器',
+    status: '在线',
+    manufacturer: '华为',
+    model: 'RH2288H V5',
+    ip: '192.168.1.105'
+  },
+  {
+    id: 'DEV006',
+    name: '服务器F',
+    datacenter: '南区数据中心F',
+    type: '服务器',
+    status: '在线',
+    manufacturer: '华为',
+    model: 'RH2288H V5',
+    ip: '192.168.1.106'
+  },
+  {
+    id: 'DEV007',
+    name: '服务器G',
+    datacenter: '东区数据中心G',
+    type: '服务器',
+    status: '在线',
+    manufacturer: '华为',
+    model: 'RH2288H V5',
+    ip: '192.168.1.107'
+  },
+  {
+    id: 'DEV008',
+    name: '服务器H',
+    datacenter: '西区数据中心H',
+    type: '服务器',
+    status: '在线',
+    manufacturer: '华为',
+    model: 'RH2288H V5',
+    ip: '192.168.1.108'
+  },
+  {
+    id: 'DEV009',
+    name: '服务器I',
+    datacenter: '北区数据中心I',
+    type: '服务器',
+    status: '在线',
+    manufacturer: '华为',
+    model: 'RH2288H V5',
+    ip: '192.168.1.109'
+  },
+  {
+    id: 'DEV010',
+    name: '服务器J',
+    datacenter: '南区数据中心J',
+    type: '服务器',
+    status: '在线',
+    manufacturer: '华为',
+    model: 'RH2288H V5',
+    ip: '192.168.1.110'
+  }
+])
+
+// 操作函数
+const addDevice = () => {
+  console.log('添加设备')
+  // 这里可以添加添加设备的逻辑
+}
+
+const refreshData = () => {
+  console.log('刷新数据')
+  // 这里可以添加刷新数据的逻辑
+}
+
+const exportData = () => {
+  console.log('导出数据')
+  // 这里可以添加导出数据的逻辑
+}
+
+const editDevice = (device) => {
+  console.log('编辑设备:', device)
+  // 这里可以添加编辑设备的逻辑
+}
+
+const viewDevice = (device) => {
+  console.log('查看设备详情:', device)
+  // 这里可以添加查看设备详情的逻辑
+}
 </script>
 
 <style scoped>
-/* 可以添加组件特定的样式 */
+/* 状态标签样式 */
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.status-success {
+  background-color: rgba(52, 168, 83, 0.1);
+  color: #34a853;
+}
+
+.status-warning {
+  background-color: rgba(251, 188, 5, 0.1);
+  color: #fbbc05;
+}
+
+.status-danger {
+  background-color: rgba(234, 67, 53, 0.1);
+  color: #ea4335;
+}
+
+.status-info {
+  background-color: rgba(26, 115, 232, 0.1);
+  color: #1a73e8;
+}
 </style>
